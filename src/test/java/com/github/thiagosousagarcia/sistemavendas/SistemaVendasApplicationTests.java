@@ -1,4 +1,4 @@
-package com.github.thiagosousagarcia.sistemavendasspring;
+package com.github.thiagosousagarcia.sistemavendas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
