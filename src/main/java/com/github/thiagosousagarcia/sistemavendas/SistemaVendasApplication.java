@@ -1,13 +1,13 @@
-package com.github.thiagosousagarcia.sistemavendasspring;
+package com.github.thiagosousagarcia.sistemavendas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SistemaVendasSpringApplication {
+ class SistemaVendasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SistemaVendasSpringApplication.class, args);
+		SpringApplication.run(SistemaVendasApplication.class, args);
 	}
 
 }
