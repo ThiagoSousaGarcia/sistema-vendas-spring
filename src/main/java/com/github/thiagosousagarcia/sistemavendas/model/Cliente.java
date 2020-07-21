@@ -1,6 +1,6 @@
 package com.github.thiagosousagarcia.sistemavendas.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +28,7 @@ public class Cliente {
 	private String nome;
 	
 	@Column(name = "DATA_NASCIMENTO")
-	private Date data_nascimento;
+	private LocalDate data_nascimento;
 	
 	@Column(name = "CPF")
 	private String cpf;
