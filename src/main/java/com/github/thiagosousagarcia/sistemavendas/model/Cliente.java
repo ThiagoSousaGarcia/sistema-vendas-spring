@@ -53,6 +53,5 @@ public class Cliente {
 	
 	@Column(name = "EMAIL")
 	private String email;
-
-
+	
 }
