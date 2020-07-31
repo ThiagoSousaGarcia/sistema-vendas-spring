@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
 import com.github.thiagosousagarcia.sistemavendas.repository.ClienteRepository;
+import com.github.thiagosousagarcia.sistemavendas.util.ValidaCpf;
 
 @Service
 public class ClienteService {
@@ -16,8 +17,15 @@ public class ClienteService {
 	private ClienteRepository clienteRepository;
 	
 	
-	public Cliente save(Cliente cliente) {
-		return this.clienteRepository.save(cliente);
+	public List<Cliente> findAll(){
+		return this.clienteRepository.findAll();
+	}
+	
+	public Cliente salvarCliente(Cliente cliente) {
+		if(ValidaCpf.isCPF(cliente.getCpf())) {
+			return this.clienteRepository.save(cliente);
+		}
+		return null;
 	}
 	
 	public Optional<Cliente> findById(Long id) {
@@ -28,8 +36,8 @@ public class ClienteService {
 		return this.clienteRepository.findByCpf(cpf);
 	}
 	
-	public List<Cliente> findByNomeLike(String nome){
+	public List<Cliente> findByNomeContains(String nome){
 		
-		return this.clienteRepository.findByNomeLike(nome);
+		return this.clienteRepository.findByNomeContains(nome);
 	}
 }

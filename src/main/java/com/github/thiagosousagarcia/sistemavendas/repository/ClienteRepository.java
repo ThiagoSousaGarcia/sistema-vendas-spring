@@ -11,7 +11,7 @@ import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
-	List<Cliente> findByNomeLike(String nome);
+	List<Cliente> findByNomeContains(String nome);
 	
 	Optional<Cliente> findByCpf(String cpf);
 }
