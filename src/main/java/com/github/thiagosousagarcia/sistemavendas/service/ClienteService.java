@@ -1,9 +1,10 @@
 package com.github.thiagosousagarcia.sistemavendas.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
@@ -17,8 +18,8 @@ public class ClienteService {
 	private ClienteRepository clienteRepository;
 	
 	
-	public List<Cliente> findAll(){
-		return this.clienteRepository.findAll();
+	public Page<Cliente> findAll(Pageable pageable){
+		return this.clienteRepository.findAll(pageable);
 	}
 	
 	public Cliente salvarCliente(Cliente cliente) {
@@ -36,8 +37,8 @@ public class ClienteService {
 		return this.clienteRepository.findByCpf(cpf);
 	}
 	
-	public List<Cliente> findByNomeContains(String nome){
+	public Page<Cliente> findByNomeContains(String nome, Pageable pageable){
 		
-		return this.clienteRepository.findByNomeContains(nome);
+		return this.clienteRepository.findByNomeContains(nome, pageable);
 	}
 }

@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.ClienteDTO;
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.DTOConverter;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -53,5 +56,11 @@ public class Cliente {
 	
 	@Column(name = "EMAIL")
 	private String email;
+	
+	public ClienteDTO toDTO() {
+		final ClienteDTO dto = DTOConverter.toObject(this, ClienteDTO.class);
+		
+		return dto;
+	}
 	
 }
