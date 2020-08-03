@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.DTOConverter;
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.ProdutoDTO;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,4 +32,10 @@ public class Produto {
 	
 	@Column(name = "VALOR_PRODUTO")
 	private BigDecimal valorProduto;
+	
+	public ProdutoDTO toDTO() {
+		ProdutoDTO dto = DTOConverter.toObject(this,ProdutoDTO.class);
+		
+		return dto;
+	}
 }

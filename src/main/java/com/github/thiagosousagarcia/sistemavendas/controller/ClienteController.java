@@ -30,12 +30,11 @@ public class ClienteController {
 	
 	
 	@PostMapping
-	public ResponseEntity<ClienteDTO> saveCliente(@RequestBody ClienteDTO clienteDTO){
+	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO clienteDTO){
 		Cliente novoCliente = this.clienteService.salvarCliente(clienteDTO.toEntity());
-		ClienteDTO novoClienteDTO = novoCliente.toDTO();
-		
 		
 		if(novoCliente != null) {
+			ClienteDTO novoClienteDTO = novoCliente.toDTO();
 			return ResponseEntity.ok(novoClienteDTO);
 		}
 		
@@ -56,7 +55,6 @@ public class ClienteController {
 		Page<Cliente> clientes = this.clienteService.findByNomeContains(nome, pageable);
 		
 		return DTOConverter.toPage(clientes, ClienteDTO.class);
-		
 	}
 	
 	
@@ -70,7 +68,6 @@ public class ClienteController {
 		}
 		
 		return ResponseEntity.notFound().build();
-		
 	}
 	
 	@GetMapping("/byCpf")
@@ -83,7 +80,6 @@ public class ClienteController {
 		}
 		
 		return ResponseEntity.notFound().build();
-		
 	}
 	
 }
