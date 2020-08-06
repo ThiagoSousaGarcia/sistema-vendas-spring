@@ -12,9 +12,7 @@ import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
-	Page<Cliente> findByNomeContains(String nome, Pageable pageable);
-	
-	Page<Cliente> findAll(Pageable pageable);
+	Page<Cliente> findByNomeContains(String nome, Pageable pageable);	
 	
 	Optional<Cliente> findByCpf(String cpf);
 }

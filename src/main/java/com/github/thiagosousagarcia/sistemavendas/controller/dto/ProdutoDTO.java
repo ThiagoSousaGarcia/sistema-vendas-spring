@@ -19,8 +19,8 @@ public class ProdutoDTO {
 	@JsonProperty("descricao")
 	private String descricao;
 	
-	@JsonProperty("valor_produto")
-	private BigDecimal valorProduto;
+	@JsonProperty("preco")
+	private BigDecimal preco;
 	
 	public Produto toEntity() {
 		Produto produto = DTOConverter.toObject(this, Produto.class);

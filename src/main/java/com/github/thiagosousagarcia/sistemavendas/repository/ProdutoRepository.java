@@ -10,6 +10,4 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	
 	Page<Produto> findByDescricaoContains(String descricao,Pageable pageable);
 	
-	Page<Produto> findAll(Pageable pageable);
-	
 }

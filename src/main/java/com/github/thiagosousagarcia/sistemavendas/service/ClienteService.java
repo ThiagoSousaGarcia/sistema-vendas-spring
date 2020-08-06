@@ -41,4 +41,19 @@ public class ClienteService {
 		
 		return this.clienteRepository.findByNomeContains(nome, pageable);
 	}
+	
+	public void deleteCliente(Cliente cliente) {
+		this.clienteRepository.delete(cliente);
+	}
+	
+	public Cliente updateCliente(Long id, Cliente clienteAtualizado) {
+		Optional<Cliente> optCliente = this.findById(id);
+		
+		if(optCliente.isPresent()) {
+			clienteAtualizado.setId(optCliente.get().getId());
+			return this.salvarCliente(clienteAtualizado);
+		}
+		
+		return null;
+	}
 }

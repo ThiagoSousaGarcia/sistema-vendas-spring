@@ -30,8 +30,8 @@ public class Produto {
 	@Column(name = "DESCRICAO")
 	private String descricao;
 	
-	@Column(name = "VALOR_PRODUTO")
-	private BigDecimal valorProduto;
+	@Column(name = "PRECO")
+	private BigDecimal preco;
 	
 	public ProdutoDTO toDTO() {
 		ProdutoDTO dto = DTOConverter.toObject(this,ProdutoDTO.class);

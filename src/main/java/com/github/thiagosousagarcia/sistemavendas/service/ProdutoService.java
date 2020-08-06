@@ -32,4 +32,19 @@ public class ProdutoService {
 		return this.repository.findByDescricaoContains(descricao, pageable);
 	}
 	
+	public void deleteProduto(Produto produto) {
+		this.repository.delete(produto);
+	}
+	
+	public Produto updateProduto(Long id, Produto produtoAtualizado) {
+		Optional<Produto> produto = this.findById(id);
+		
+		if(produto.isPresent()) {
+			produtoAtualizado.setId(produto.get().getId());
+			return this.save(produtoAtualizado);
+		}
+		
+		return null;
+	}
+	
 }

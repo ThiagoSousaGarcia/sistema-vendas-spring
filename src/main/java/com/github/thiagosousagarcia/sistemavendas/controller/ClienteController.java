@@ -1,5 +1,6 @@
 package com.github.thiagosousagarcia.sistemavendas.controller;
 
+import java.net.URI;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,16 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.github.thiagosousagarcia.sistemavendas.controller.dto.ClienteDTO;
 import com.github.thiagosousagarcia.sistemavendas.controller.dto.DTOConverter;
@@ -30,16 +35,16 @@ public class ClienteController {
 	
 	
 	@PostMapping
-	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO clienteDTO){
+	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO clienteDTO, final UriComponentsBuilder uriBuilder){
 		Cliente novoCliente = this.clienteService.salvarCliente(clienteDTO.toEntity());
 		
 		if(novoCliente != null) {
 			ClienteDTO novoClienteDTO = novoCliente.toDTO();
-			return ResponseEntity.ok(novoClienteDTO);
+			final Long id = novoClienteDTO.getId();
+			final URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(id).toUri();
+			return ResponseEntity.created(uri).body(novoClienteDTO);
 		}
-		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		
 	}
 	
 	@GetMapping
@@ -57,7 +62,6 @@ public class ClienteController {
 		return DTOConverter.toPage(clientes, ClienteDTO.class);
 	}
 	
-	
 	@GetMapping("/byId")
 	public ResponseEntity<ClienteDTO> getClienteById(@RequestParam(required = true) Long id){
 		Optional<Cliente> optCliente = this.clienteService.findById(id);
@@ -66,7 +70,6 @@ public class ClienteController {
 			ClienteDTO clienteDTO = optCliente.get().toDTO();
 			return ResponseEntity.ok(clienteDTO);
 		}
-		
 		return ResponseEntity.notFound().build();
 	}
 	
@@ -78,7 +81,27 @@ public class ClienteController {
 			ClienteDTO clienteDTO = optCliente.get().toDTO();
 			return ResponseEntity.ok(clienteDTO);
 		}
+		return ResponseEntity.notFound().build();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@DeleteMapping("/{id}")
+	public ResponseEntity deleteCliente(@PathVariable Long id) {
+		Optional<Cliente> optCliente = this.clienteService.findById(id);
+		if(optCliente.isPresent()) {
+			this.clienteService.deleteCliente(optCliente.get());
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.notFound().build();
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<ClienteDTO> updateCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+		Cliente clienteAtualizado = this.clienteService.updateCliente(id, clienteDTO.toEntity());
 		
+		if(clienteAtualizado != null) {
+			return ResponseEntity.ok(clienteAtualizado.toDTO());
+		}
 		return ResponseEntity.notFound().build();
 	}
 	
