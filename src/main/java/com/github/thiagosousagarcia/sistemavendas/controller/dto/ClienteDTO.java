@@ -16,34 +16,34 @@ public class ClienteDTO {
 	
 	private Long id;
 	
-	@JsonProperty("nome")
+	@JsonProperty("Nome")
 	private String nome;
 	
-	@JsonProperty("data_nascimento")
-	private LocalDate data_nascimento;
+	@JsonProperty("DataNascimento")
+	private LocalDate dataNascimento;
 	
-	@JsonProperty("cpf")
+	@JsonProperty("Cpf")
 	private String cpf;
 	
-	@JsonProperty("endereco")
+	@JsonProperty("Endereco")
 	private String endereco;
 	
-	@JsonProperty("bairro")
+	@JsonProperty("Bairro")
 	private String bairro;
 	
-	@JsonProperty("cidade")
+	@JsonProperty("Cidade")
 	private String cidade;
 	
-	@JsonProperty("complemento")
+	@JsonProperty("Complemento")
 	private String complemento;
 	
-	@JsonProperty("cep")
+	@JsonProperty("Cep")
 	private String cep;
 	
-	@JsonProperty("telefone")
+	@JsonProperty("Telefone")
 	private String telefone;
 	
-	@JsonProperty("email")
+	@JsonProperty("Email")
 	private String email;
 	
 	public Cliente toEntity() {

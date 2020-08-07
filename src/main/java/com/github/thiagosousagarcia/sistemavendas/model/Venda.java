@@ -2,6 +2,7 @@ package com.github.thiagosousagarcia.sistemavendas.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -36,4 +38,8 @@ public class Venda {
 	
 	@Column(name = "VALOR_VENDA")
 	private BigDecimal valorVenda;
+	
+	@OneToMany(mappedBy = "venda")
+	List<ItemVenda> itens;
+	
 }

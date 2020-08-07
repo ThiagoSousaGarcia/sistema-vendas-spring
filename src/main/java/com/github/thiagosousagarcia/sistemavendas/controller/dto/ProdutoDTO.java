@@ -16,10 +16,10 @@ public class ProdutoDTO {
 	
 	private Long id;
 	
-	@JsonProperty("descricao")
+	@JsonProperty("Descricao")
 	private String descricao;
 	
-	@JsonProperty("preco")
+	@JsonProperty("Preco")
 	private BigDecimal preco;
 	
 	public Produto toEntity() {

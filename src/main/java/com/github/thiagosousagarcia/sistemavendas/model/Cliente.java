@@ -31,7 +31,7 @@ public class Cliente {
 	private String nome;
 	
 	@Column(name = "DATA_NASCIMENTO")
-	private LocalDate data_nascimento;
+	private LocalDate dataNascimento;
 	
 	@Column(name = "CPF")
 	private String cpf;
