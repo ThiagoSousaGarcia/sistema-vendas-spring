@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.github.thiagosousagarcia.sistemavendas.excpetion.ClienteCreationExcpetion;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.ClienteExcpetion;
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
 import com.github.thiagosousagarcia.sistemavendas.repository.ClienteRepository;
 import com.github.thiagosousagarcia.sistemavendas.util.ValidaCpf;
@@ -18,23 +20,40 @@ public class ClienteService {
 	private ClienteRepository clienteRepository;
 	
 	
+	
+	public Optional<Cliente> findById(Long id){
+		return this.clienteRepository.findById(id);
+	}
+	
+	public Optional<Cliente> findByCpf(String cpf){
+		return this.findByCpf(cpf);
+	}
+	
 	public Page<Cliente> findAll(Pageable pageable){
 		return this.clienteRepository.findAll(pageable);
 	}
 	
 	public Cliente salvarCliente(Cliente cliente) {
-		if(ValidaCpf.isCPF(cliente.getCpf())) {
-			return this.clienteRepository.save(cliente);
+		if(!ValidaCpf.isCPF(cliente.getCpf())) {
+			throw new ClienteCreationExcpetion("O CPF do cliente não é válido");
 		}
-		return null;
+		return this.clienteRepository.save(cliente);
 	}
 	
-	public Optional<Cliente> findById(Long id) {
-		return this.clienteRepository.findById(id);
+	public Cliente encontrarClientePeloId(Long id) {
+		Cliente cliente = this.findById(id)
+										.orElseThrow(() -> 
+												new ClienteExcpetion("Não foi encontrado nenhum cliente com esse ID: " +id));
+		
+		return cliente;
 	}
 	
-	public Optional<Cliente> findByCpf(String cpf) {
-		return this.clienteRepository.findByCpf(cpf);
+	public Cliente encontrarClientePeloCpf(String cpf) {
+		Cliente cliente = this.findByCpf(cpf)
+											.orElseThrow(()-> 
+												new ClienteExcpetion("Não foi encontrado nenhum cliente com esse CPF: " + cpf));
+		
+		return cliente;
 	}
 	
 	public Page<Cliente> findByNomeContains(String nome, Pageable pageable){
@@ -42,18 +61,20 @@ public class ClienteService {
 		return this.clienteRepository.findByNomeContains(nome, pageable);
 	}
 	
+	public void deletarClientePeloID(Long id) {
+		Cliente cliente = encontrarClientePeloId(id);
+		
+		this.deleteCliente(cliente);
+	}
+	
 	public void deleteCliente(Cliente cliente) {
 		this.clienteRepository.delete(cliente);
 	}
 	
 	public Cliente updateCliente(Long id, Cliente clienteAtualizado) {
-		Optional<Cliente> optCliente = this.findById(id);
+		Cliente cliente = this.encontrarClientePeloId(id);
 		
-		if(optCliente.isPresent()) {
-			clienteAtualizado.setId(optCliente.get().getId());
-			return this.salvarCliente(clienteAtualizado);
-		}
-		
-		return null;
+		clienteAtualizado.setId(cliente.getId());
+		return this.salvarCliente(clienteAtualizado);
 	}
 }

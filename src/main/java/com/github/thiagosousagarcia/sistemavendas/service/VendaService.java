@@ -47,7 +47,7 @@ public class VendaService {
 		Venda venda = new Venda();
 		
 		Cliente cliente = clienteService.findById(vendaDTO.getCliente())
-				.orElseThrow(() -> new VendaExcpetion("Não há nenhum cliente cadastrado com esse ID"));
+				.orElseThrow(() -> new VendaExcpetion("Não há nenhum cliente cadastrado com esse ID: " + vendaDTO.getCliente()));
 		
 		List<ItemVenda> itens = criarItens(venda, vendaDTO.getItens());
 		
@@ -72,7 +72,7 @@ public class VendaService {
 		
 		itensDTO.forEach( item -> {
 			Produto produto = produtoService.findById(item.getProduto())
-					.orElseThrow(() -> new VendaExcpetion("Não há nenhum produto com esse ID"));
+					.orElseThrow(() -> new VendaExcpetion("Não há nenhum produto com esse ID: " + item.getProduto()));
 			
 			ItemVenda itemVenda = new ItemVenda();
 			itemVenda.setVenda(venda);

@@ -1,7 +1,6 @@
 package com.github.thiagosousagarcia.sistemavendas.controller;
 
 import java.net.URI;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,14 +50,10 @@ public class ProdutoController {
 	
 	@GetMapping("byId")
 	public ResponseEntity<ProdutoDTO> findById(@RequestParam(required = true) Long id){
-		Optional<Produto> optProduto = this.service.findById(id);
-		
-		if(optProduto.isPresent()) {
-			ProdutoDTO produtoDTO = optProduto.get().toDTO();
-			return ResponseEntity.ok(produtoDTO);
-		}
-		
-		return ResponseEntity.notFound().build();
+		Produto produto = this.service.encontrarProdutoPeloID(id);
+
+		ProdutoDTO produtoDTO = produto.toDTO();
+		return ResponseEntity.ok(produtoDTO);
 	}
 	
 	@GetMapping("byDescricaoContains")
@@ -72,23 +67,13 @@ public class ProdutoController {
 	public ResponseEntity<ProdutoDTO> updateProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO){
 		Produto produtoAtualizado = this.service.updateProduto(id, produtoDTO.toEntity());
 		
-		if(produtoAtualizado != null) {
-			return ResponseEntity.ok(produtoAtualizado.toDTO());
-		}
-		
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(produtoAtualizado.toDTO());
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteProduto(@PathVariable Long id) {
-		Optional<Produto> optProduto = this.service.findById(id);
-		
-		if(optProduto.isPresent()) {
-			this.service.deleteProduto(optProduto.get());
-			return ResponseEntity.noContent().build();	
-		}
-		
-		return ResponseEntity.notFound().build();
+		this.service.deletarProdutoPeloID(id);
+		return ResponseEntity.noContent().build();	
 	}
 }
