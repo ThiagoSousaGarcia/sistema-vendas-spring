@@ -1,13 +1,16 @@
 package com.github.thiagosousagarcia.sistemavendas.controller;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.DetalheVendaDTO;
 import com.github.thiagosousagarcia.sistemavendas.controller.dto.VendaDTO;
 import com.github.thiagosousagarcia.sistemavendas.model.Venda;
 import com.github.thiagosousagarcia.sistemavendas.service.VendaService;
@@ -20,10 +23,14 @@ public class VendaController {
 	private VendaService vendaService;
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Long create(@RequestBody VendaDTO vendaDTO){
+	public ResponseEntity<DetalheVendaDTO> create(@RequestBody VendaDTO vendaDTO,  final UriComponentsBuilder uriBuilder){
 		Venda novaVenda = this.vendaService.salvarVenda(vendaDTO);
-		return novaVenda.getId();
+		DetalheVendaDTO dto = novaVenda.toDetalheVendaDTO();
+		
+		final Long id = dto.getId();
+		final URI uri = uriBuilder.path("/vendas/{id}").buildAndExpand(id).toUri();
+		return ResponseEntity.created(uri).body(dto);
+		
 	}
 	
 	

@@ -2,6 +2,7 @@ package com.github.thiagosousagarcia.sistemavendas.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,6 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.ClienteDTO;
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.DTOConverter;
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.DetalheItemVendaDTO;
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.DetalheVendaDTO;
+import com.github.thiagosousagarcia.sistemavendas.controller.dto.ProdutoDTO;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,5 +48,28 @@ public class Venda {
 	
 	@OneToMany(mappedBy = "venda")
 	List<ItemVenda> itens;
+	
+	public DetalheVendaDTO toDetalheVendaDTO() {
+		DetalheVendaDTO dto = new DetalheVendaDTO();
+		List<DetalheItemVendaDTO> detalheItensDTO = new ArrayList<DetalheItemVendaDTO>();
+		
+		dto.setCliente(DTOConverter.toObject(this.cliente, ClienteDTO.class));
+		dto.setDataVenda(this.dataVenda);
+		dto.setValorVenda(this.valorVenda);
+		
+		if(this.itens != null) {
+			this.itens.forEach(item -> {
+				DetalheItemVendaDTO detalheItemVendaDTO = new DetalheItemVendaDTO();
+				detalheItemVendaDTO.setProduto(DTOConverter.toObject(item.getProduto(), ProdutoDTO.class));
+				detalheItemVendaDTO.setQuantidade(item.getQuantidade());
+				
+				detalheItensDTO.add(detalheItemVendaDTO);
+			});
+		}
+		
+		dto.setItens(detalheItensDTO);
+		
+		return dto;
+	}
 	
 }
