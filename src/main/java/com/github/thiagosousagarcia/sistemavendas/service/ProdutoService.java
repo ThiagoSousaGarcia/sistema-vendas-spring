@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.github.thiagosousagarcia.sistemavendas.excpetion.ProdutoException;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.ProdutoNotFoundException;
 import com.github.thiagosousagarcia.sistemavendas.model.Produto;
 import com.github.thiagosousagarcia.sistemavendas.repository.ProdutoRepository;
 
@@ -33,7 +33,7 @@ public class ProdutoService {
 	public Produto encontrarProdutoPeloID(Long id) {
 		Produto produto = this.repository.findById(id)
 										.orElseThrow(()->
-											new ProdutoException("Não foi encontrado nenhum produto com esse ID: " + id));
+											new ProdutoNotFoundException("Não foi encontrado nenhum produto com esse Código: " + id));
 
 		return produto;
 	}

@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.thiagosousagarcia.sistemavendas.model.enums.StatusVenda;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +16,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(of = {"id"})
 public class DetalheVendaDTO {
-
+	
+	@JsonIgnore
 	private Long id;
 	
 	@JsonProperty("Cliente")
@@ -26,8 +29,11 @@ public class DetalheVendaDTO {
 	@JsonProperty("ValorVenda")
 	private BigDecimal valorVenda;
 	
-	@JsonProperty("itens")
+	@JsonProperty("Itens")
 	List<DetalheItemVendaDTO> itens;
+	
+	@JsonProperty("Status")
+	StatusVenda status;
 	
 
 }

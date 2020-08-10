@@ -2,6 +2,7 @@ package com.github.thiagosousagarcia.sistemavendas.controller.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
@@ -14,6 +15,7 @@ import lombok.EqualsAndHashCode;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClienteDTO {
 	
+	@JsonIgnore
 	private Long id;
 	
 	@JsonProperty("Nome")

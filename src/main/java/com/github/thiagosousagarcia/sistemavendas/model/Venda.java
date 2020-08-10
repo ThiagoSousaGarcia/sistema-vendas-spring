@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import com.github.thiagosousagarcia.sistemavendas.controller.dto.DTOConverter;
 import com.github.thiagosousagarcia.sistemavendas.controller.dto.DetalheItemVendaDTO;
 import com.github.thiagosousagarcia.sistemavendas.controller.dto.DetalheVendaDTO;
 import com.github.thiagosousagarcia.sistemavendas.controller.dto.ProdutoDTO;
+import com.github.thiagosousagarcia.sistemavendas.model.enums.StatusVenda;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,6 +52,10 @@ public class Venda {
 	@OneToMany(mappedBy = "venda")
 	List<ItemVenda> itens;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "STATUS")
+	StatusVenda status;
+	
 	public DetalheVendaDTO toDetalheVendaDTO() {
 		DetalheVendaDTO dto = new DetalheVendaDTO();
 		List<DetalheItemVendaDTO> detalheItensDTO = new ArrayList<DetalheItemVendaDTO>();
@@ -56,6 +63,7 @@ public class Venda {
 		dto.setCliente(DTOConverter.toObject(this.cliente, ClienteDTO.class));
 		dto.setDataVenda(this.dataVenda);
 		dto.setValorVenda(this.valorVenda);
+		dto.setStatus(status);
 		
 		if(this.itens != null) {
 			this.itens.forEach(item -> {

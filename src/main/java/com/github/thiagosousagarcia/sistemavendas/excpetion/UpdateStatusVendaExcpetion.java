@@ -1,10 +1,10 @@
 package com.github.thiagosousagarcia.sistemavendas.excpetion;
 
-public class VendaExcpetion extends RuntimeException{
+public class UpdateStatusVendaExcpetion extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 
-	public VendaExcpetion (String message) {
+	public UpdateStatusVendaExcpetion (String message) {
 		super(message);
 	}
 	

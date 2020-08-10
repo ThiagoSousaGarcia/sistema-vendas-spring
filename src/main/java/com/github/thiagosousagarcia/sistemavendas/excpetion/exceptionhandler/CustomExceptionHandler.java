@@ -5,35 +5,49 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.github.thiagosousagarcia.sistemavendas.excpetion.ClienteCreationExcpetion;
-import com.github.thiagosousagarcia.sistemavendas.excpetion.ClienteExcpetion;
-import com.github.thiagosousagarcia.sistemavendas.excpetion.ProdutoException;
-import com.github.thiagosousagarcia.sistemavendas.excpetion.VendaExcpetion;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.UpdateStatusVendaExcpetion;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.ClienteNotFoundExcpetion;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.CreateClienteExcpetion;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.CreateVendaExcpetion;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.ProdutoNotFoundException;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.VendaNotFoundExcpetion;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
 	
-	@ExceptionHandler(VendaExcpetion.class)
+	@ExceptionHandler(CreateVendaExcpetion.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorMessage handle(VendaExcpetion ex) {
+	public ErrorMessage handle(CreateVendaExcpetion ex) {
 		return new ErrorMessage(ex.getMessage());
 	}
 	
-	@ExceptionHandler(ClienteCreationExcpetion.class)
+	@ExceptionHandler(UpdateStatusVendaExcpetion.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorMessage handle(ClienteCreationExcpetion ex) {
+	public ErrorMessage handle(UpdateStatusVendaExcpetion ex) {
 		return new ErrorMessage(ex.getMessage());
 	}
 	
-	@ExceptionHandler(ClienteExcpetion.class)
+	@ExceptionHandler(VendaNotFoundExcpetion.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ErrorMessage handle(ClienteExcpetion ex) {
+	public ErrorMessage handle(VendaNotFoundExcpetion ex) {
 		return new ErrorMessage(ex.getMessage());
 	}
 	
-	@ExceptionHandler(ProdutoException.class)
+	@ExceptionHandler(CreateClienteExcpetion.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorMessage handle(CreateClienteExcpetion ex) {
+		return new ErrorMessage(ex.getMessage());
+	}
+	
+	@ExceptionHandler(ClienteNotFoundExcpetion.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ErrorMessage handle(ProdutoException ex) {
+	public ErrorMessage handle(ClienteNotFoundExcpetion ex) {
+		return new ErrorMessage(ex.getMessage());
+	}
+	
+	@ExceptionHandler(ProdutoNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ErrorMessage handle(ProdutoNotFoundException ex) {
 		return new ErrorMessage(ex.getMessage());
 	}
 	
