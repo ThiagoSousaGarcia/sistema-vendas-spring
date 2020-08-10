@@ -2,6 +2,8 @@ package com.github.thiagosousagarcia.sistemavendas.controller;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +35,7 @@ public class ClienteController {
 	
 	
 	@PostMapping
-	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO clienteDTO, final UriComponentsBuilder uriBuilder){
+	public ResponseEntity<ClienteDTO> create(@RequestBody @Valid ClienteDTO clienteDTO, final UriComponentsBuilder uriBuilder){
 		Cliente novoCliente = this.clienteService.salvarCliente(clienteDTO.toEntity());
 		
 		ClienteDTO novoClienteDTO = novoCliente.toDTO();
@@ -86,7 +88,7 @@ public class ClienteController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ClienteDTO> updateCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+	public ResponseEntity<ClienteDTO> updateCliente(@PathVariable Long id, @RequestBody @Valid ClienteDTO clienteDTO) {
 		Cliente clienteAtualizado = this.clienteService.updateCliente(id, clienteDTO.toEntity());
 		
 		return ResponseEntity.ok(clienteAtualizado.toDTO());

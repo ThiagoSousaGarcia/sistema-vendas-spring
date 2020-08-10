@@ -7,11 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.github.thiagosousagarcia.sistemavendas.excpetion.CreateClienteExcpetion;
 import com.github.thiagosousagarcia.sistemavendas.excpetion.ClienteNotFoundExcpetion;
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
 import com.github.thiagosousagarcia.sistemavendas.repository.ClienteRepository;
-import com.github.thiagosousagarcia.sistemavendas.util.ValidaCpf;
 
 @Service
 public class ClienteService {
@@ -32,9 +30,6 @@ public class ClienteService {
 	}
 	
 	public Cliente salvarCliente(Cliente cliente) {
-		if(!ValidaCpf.isCPF(cliente.getCpf())) {
-			throw new CreateClienteExcpetion("O CPF do cliente não é válido");
-		}
 		return this.clienteRepository.save(cliente);
 	}
 	

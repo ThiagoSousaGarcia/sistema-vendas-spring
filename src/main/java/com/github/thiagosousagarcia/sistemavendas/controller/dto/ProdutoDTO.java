@@ -2,6 +2,9 @@ package com.github.thiagosousagarcia.sistemavendas.controller.dto;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,9 +21,11 @@ public class ProdutoDTO {
 	@JsonIgnore
 	private Long id;
 	
+	@NotBlank(message = "{descricao.obrigatorio}")
 	@JsonProperty("Descricao")
 	private String descricao;
 	
+	@NotNull(message = "{preco.obrigatorio}")
 	@JsonProperty("Preco")
 	private BigDecimal preco;
 	

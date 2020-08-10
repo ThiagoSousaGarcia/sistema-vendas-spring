@@ -1,15 +1,19 @@
 package com.github.thiagosousagarcia.sistemavendas.excpetion.exceptionhandler;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.github.thiagosousagarcia.sistemavendas.excpetion.UpdateStatusVendaExcpetion;
 import com.github.thiagosousagarcia.sistemavendas.excpetion.ClienteNotFoundExcpetion;
-import com.github.thiagosousagarcia.sistemavendas.excpetion.CreateClienteExcpetion;
 import com.github.thiagosousagarcia.sistemavendas.excpetion.CreateVendaExcpetion;
 import com.github.thiagosousagarcia.sistemavendas.excpetion.ProdutoNotFoundException;
+import com.github.thiagosousagarcia.sistemavendas.excpetion.UpdateStatusVendaExcpetion;
 import com.github.thiagosousagarcia.sistemavendas.excpetion.VendaNotFoundExcpetion;
 
 @RestControllerAdvice
@@ -33,10 +37,16 @@ public class CustomExceptionHandler {
 		return new ErrorMessage(ex.getMessage());
 	}
 	
-	@ExceptionHandler(CreateClienteExcpetion.class)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorMessage handle(CreateClienteExcpetion ex) {
-		return new ErrorMessage(ex.getMessage());
+	public ErrorMessage handle(MethodArgumentNotValidException ex) {
+		List<String> erros = new ArrayList<>();
+		
+		erros = ex.getBindingResult().getAllErrors()
+							.stream().map(erro -> erro.getDefaultMessage())
+							.collect(Collectors.toList());
+		
+		return new ErrorMessage(erros);
 	}
 	
 	@ExceptionHandler(ClienteNotFoundExcpetion.class)

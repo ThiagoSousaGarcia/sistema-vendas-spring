@@ -2,6 +2,11 @@ package com.github.thiagosousagarcia.sistemavendas.controller.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,33 +23,43 @@ public class ClienteDTO {
 	@JsonIgnore
 	private Long id;
 	
+	@NotBlank(message = "{nome.obrigatorio}")
 	@JsonProperty("Nome")
 	private String nome;
 	
+	@NotNull(message = "{data_nascimento.obrigatorio}")
 	@JsonProperty("DataNascimento")
 	private LocalDate dataNascimento;
 	
+	@NotBlank(message = "{cpf.obrigatorio}")
+	@CPF(message = "{cpf.valido}")
 	@JsonProperty("Cpf")
 	private String cpf;
 	
+	@NotBlank(message = "{endereco.obrigatorio}")
 	@JsonProperty("Endereco")
 	private String endereco;
 	
+	@NotBlank(message = "{bairro.obrigatorio}")
 	@JsonProperty("Bairro")
 	private String bairro;
 	
+	@NotBlank(message = "{cidade.obrigatorio}")
 	@JsonProperty("Cidade")
 	private String cidade;
 	
 	@JsonProperty("Complemento")
 	private String complemento;
 	
+	@NotBlank(message = "{cep.obrigatorio}")
 	@JsonProperty("Cep")
 	private String cep;
 	
+	@NotBlank(message = "{telefone.obrigatorio}")
 	@JsonProperty("Telefone")
 	private String telefone;
 	
+	@NotBlank(message = "{email.obrigatorio}")
 	@JsonProperty("Email")
 	private String email;
 	

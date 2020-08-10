@@ -2,6 +2,8 @@ package com.github.thiagosousagarcia.sistemavendas.controller;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +35,7 @@ public class ProdutoController {
 	
 	
 	@PostMapping
-	public ResponseEntity<ProdutoDTO> create(@RequestBody ProdutoDTO produtoDTO, final UriComponentsBuilder uriBuilder){
+	public ResponseEntity<ProdutoDTO> create(@RequestBody @Valid ProdutoDTO produtoDTO, final UriComponentsBuilder uriBuilder){
 		Produto novoProduto = this.service.save(produtoDTO.toEntity());
 		ProdutoDTO novoProdutoDTO = novoProduto.toDTO();
 		final Long id = novoProdutoDTO.getId();
@@ -64,7 +66,7 @@ public class ProdutoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ProdutoDTO> updateProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO){
+	public ResponseEntity<ProdutoDTO> updateProduto(@PathVariable Long id, @RequestBody @Valid ProdutoDTO produtoDTO){
 		Produto produtoAtualizado = this.service.updateProduto(id, produtoDTO.toEntity());
 		
 		return ResponseEntity.ok(produtoAtualizado.toDTO());

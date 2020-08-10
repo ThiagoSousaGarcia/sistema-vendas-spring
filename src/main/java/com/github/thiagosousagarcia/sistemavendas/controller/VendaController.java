@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,7 +36,7 @@ public class VendaController {
 	private VendaService vendaService;
 	
 	@PostMapping
-	public ResponseEntity<DetalheVendaDTO> create(@RequestBody VendaDTO vendaDTO,  final UriComponentsBuilder uriBuilder){
+	public ResponseEntity<DetalheVendaDTO> create(@RequestBody @Valid VendaDTO vendaDTO,  final UriComponentsBuilder uriBuilder){
 		Venda novaVenda = this.vendaService.salvarVenda(vendaDTO);
 		DetalheVendaDTO dto = novaVenda.toDetalheVendaDTO();
 		
