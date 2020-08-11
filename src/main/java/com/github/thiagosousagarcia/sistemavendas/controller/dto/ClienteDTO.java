@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
@@ -20,7 +19,6 @@ import lombok.EqualsAndHashCode;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClienteDTO {
 	
-	@JsonIgnore
 	private Long id;
 	
 	@NotBlank(message = "{nome.obrigatorio}")

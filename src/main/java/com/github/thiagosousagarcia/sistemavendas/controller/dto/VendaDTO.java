@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.thiagosousagarcia.sistemavendas.validation.NotEmptyList;
@@ -19,7 +18,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(of = {"id"})
 public class VendaDTO {
 	
-	@JsonIgnore
 	private Long id;
 	
 	@NotNull(message = "{codigo_cliente.obrigatorio}")
