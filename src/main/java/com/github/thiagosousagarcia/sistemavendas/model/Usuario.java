@@ -11,10 +11,12 @@ import com.github.thiagosousagarcia.sistemavendas.controller.dto.DTOConverter;
 import com.github.thiagosousagarcia.sistemavendas.controller.dto.UsuarioDTO;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

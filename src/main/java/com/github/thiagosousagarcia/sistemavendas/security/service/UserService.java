@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.github.thiagosousagarcia.sistemavendas.excpetion.InvalidPasswordException;
 import com.github.thiagosousagarcia.sistemavendas.model.Usuario;
 import com.github.thiagosousagarcia.sistemavendas.service.UsuarioService;
 
@@ -35,6 +36,15 @@ public class UserService implements UserDetailsService {
 					password(usuario.getSenha()).
 					roles(rolesUsuario).
 					build();
+	}
+	
+	public UserDetails autenticate(Usuario usuario) {
+		UserDetails user = loadUserByUsername(usuario.getLogin());
+		if(passwordEncoder.matches(usuario.getSenha(), user.getPassword())) {
+			return user;
+		}
+		
+		throw new InvalidPasswordException("A senha está invalida");
 	}
 
 }
