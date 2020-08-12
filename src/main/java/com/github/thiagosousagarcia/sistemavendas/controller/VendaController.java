@@ -28,6 +28,10 @@ import com.github.thiagosousagarcia.sistemavendas.controller.dto.VendaDTO;
 import com.github.thiagosousagarcia.sistemavendas.model.Venda;
 import com.github.thiagosousagarcia.sistemavendas.service.VendaService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/vendas")
 public class VendaController {
@@ -35,6 +39,12 @@ public class VendaController {
 	@Autowired
 	private VendaService vendaService;
 	
+	@ApiOperation("Efetua uma nova venda")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "Venda realizada com sucesso"),
+		@ApiResponse(code = 400, message = "Erro de validação")
+
+	})
 	@PostMapping
 	public ResponseEntity<DetalheVendaDTO> create(@RequestBody @Valid VendaDTO vendaDTO,  final UriComponentsBuilder uriBuilder){
 		Venda novaVenda = this.vendaService.salvarVenda(vendaDTO);
@@ -46,6 +56,10 @@ public class VendaController {
 		
 	}
 	
+	@ApiOperation("Busca todas as vendas efetuadas")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Vendas carregadas com sucesso")
+	})
 	@GetMapping
 	public Page<DetalheVendaDTO> findAll(@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Venda> vendas = this.vendaService.findAll(pageable);
@@ -58,6 +72,10 @@ public class VendaController {
 		return new PageImpl<DetalheVendaDTO>(detalhesVendas, pageable, detalhesVendas.size());
 	}
 	
+	@ApiOperation("Busca todas as vendas feitas para um determinado Cliente, através do seu CPF")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Vendas carregadas com sucesso")
+	})
 	@GetMapping("/byClienteCpf")
 	public Page<DetalheVendaDTO> findByClienteCpf(@RequestParam String cpf, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Venda> vendas = this.vendaService.findByClienteCPF(cpf, pageable);
@@ -70,6 +88,11 @@ public class VendaController {
 		return new PageImpl<DetalheVendaDTO>(detalhesVendas, pageable, detalhesVendas.size());
 	}
 	
+	@ApiOperation("Busca uma determinada venda pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Vendas carregada com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe venda com o ID informado")
+	})
 	@GetMapping("/byId")
 	public ResponseEntity<DetalheVendaDTO> getVendaById(@RequestParam(required = true) Long id){
 		Venda venda = this.vendaService.encontrarVendaPeloId(id);
@@ -78,6 +101,11 @@ public class VendaController {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@ApiOperation("Cancela uma determinada venda pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Vendas cancelada com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe venda com o ID informado que possa ser cancelada")
+	})
 	@PatchMapping("/status")
 	public ResponseEntity<String> cancelVenda(@RequestParam(required = true) Long id){
 		Venda venda = this.vendaService.cancelarVenda(id);

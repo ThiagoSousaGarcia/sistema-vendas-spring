@@ -24,6 +24,10 @@ import com.github.thiagosousagarcia.sistemavendas.security.jwt.JwtService;
 import com.github.thiagosousagarcia.sistemavendas.security.service.UserService;
 import com.github.thiagosousagarcia.sistemavendas.service.UsuarioService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -37,9 +41,13 @@ public class UsuarioController {
 	@Autowired
 	private JwtService jwtService;
 	
+	@ApiOperation("Cadastra um novo usuário")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "Usuário cadastrado com sucesso")
+	})
 	@PostMapping
-	public ResponseEntity<UsuarioDTO> create (@RequestBody @Valid UsuarioDTO dto, final UriComponentsBuilder uriBuilder){
-		Usuario novoUsuario = this.service.salvar(dto.toEntity());
+	public ResponseEntity<UsuarioDTO> create (@RequestBody @Valid UsuarioDTO usuarioDTO, final UriComponentsBuilder uriBuilder){
+		Usuario novoUsuario = this.service.salvar(usuarioDTO.toEntity());
 		
 		UsuarioDTO novoUsuarioDTO = novoUsuario.toDTO();
 		final Long id = novoUsuarioDTO.getId();
@@ -47,6 +55,10 @@ public class UsuarioController {
 		return ResponseEntity.created(uri).body(novoUsuarioDTO);
 	}
 	
+	@ApiOperation("Autentica um usuário")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Usuário autenticado com sucesso")
+	})
 	@PostMapping("/auth")
 	public ResponseEntity<TokenDTO> autenticate(@RequestBody CredenciaisDTO credenciaisDTO) {
 		try {

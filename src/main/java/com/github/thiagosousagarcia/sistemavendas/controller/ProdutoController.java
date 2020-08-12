@@ -26,6 +26,10 @@ import com.github.thiagosousagarcia.sistemavendas.controller.dto.ProdutoDTO;
 import com.github.thiagosousagarcia.sistemavendas.model.Produto;
 import com.github.thiagosousagarcia.sistemavendas.service.ProdutoService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -33,7 +37,10 @@ public class ProdutoController {
 	@Autowired
 	ProdutoService service;
 	
-	
+	@ApiOperation("Cadastra um novo produto")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "Produto cadastrado com sucesso")
+	})
 	@PostMapping
 	public ResponseEntity<ProdutoDTO> create(@RequestBody @Valid ProdutoDTO produtoDTO, final UriComponentsBuilder uriBuilder){
 		Produto novoProduto = this.service.save(produtoDTO.toEntity());
@@ -43,6 +50,10 @@ public class ProdutoController {
 		return ResponseEntity.created(uri).body(novoProdutoDTO);
 	}
 	
+	@ApiOperation("Busca todos os produtos cadastrados")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Produtos carregados com sucesso")
+	})
 	@GetMapping
 	public Page<ProdutoDTO> findAll(@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Produto> produtos = this.service.findAll(pageable);
@@ -50,6 +61,11 @@ public class ProdutoController {
 		return DTOConverter.toPage(produtos, ProdutoDTO.class);
 	}
 	
+	@ApiOperation("Busca produto pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Cliente encontrado com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe produto com o ID informado")
+	})
 	@GetMapping("byId")
 	public ResponseEntity<ProdutoDTO> findById(@RequestParam(required = true) Long id){
 		Produto produto = this.service.encontrarProdutoPeloID(id);
@@ -58,6 +74,10 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoDTO);
 	}
 	
+	@ApiOperation("Busca todos os produtos cadastrados que possuem o(parte) da descrição informado")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Produtos carregados com sucesso")
+	})
 	@GetMapping("byDescricaoContains")
 	public Page<ProdutoDTO> findByDescricaoContains(@RequestParam(required = true) String descricao, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Produto> produtos = this.service.findByDescricaoContains(descricao, pageable);
@@ -65,6 +85,11 @@ public class ProdutoController {
 		return DTOConverter.toPage(produtos, ProdutoDTO.class);
 	}
 	
+	@ApiOperation("Atualiza produto pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Produto atualizado com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe produto com o ID informado que possa ser atualizado")
+	})
 	@PutMapping("/{id}")
 	public ResponseEntity<ProdutoDTO> updateProduto(@PathVariable Long id, @RequestBody @Valid ProdutoDTO produtoDTO){
 		Produto produtoAtualizado = this.service.updateProduto(id, produtoDTO.toEntity());
@@ -72,6 +97,11 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoAtualizado.toDTO());
 	}
 	
+	@ApiOperation("Exclui produto pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 204,message = "Produto excluído com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe produto com o ID informado que possa ser excluído")
+	})
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteProduto(@PathVariable Long id) {

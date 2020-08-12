@@ -26,6 +26,10 @@ import com.github.thiagosousagarcia.sistemavendas.controller.dto.DTOConverter;
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
 import com.github.thiagosousagarcia.sistemavendas.service.ClienteService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -33,7 +37,11 @@ public class ClienteController {
 	@Autowired
 	ClienteService clienteService;
 	
-	
+	@ApiOperation("Cadastra um novo cliente")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "Cliente cadastrado com sucesso"),
+		@ApiResponse(code = 400, message = "Erro de validação")
+	})
 	@PostMapping
 	public ResponseEntity<ClienteDTO> create(@RequestBody @Valid ClienteDTO clienteDTO, final UriComponentsBuilder uriBuilder){
 		Cliente novoCliente = this.clienteService.salvarCliente(clienteDTO.toEntity());
@@ -45,6 +53,10 @@ public class ClienteController {
 
 	}
 	
+	@ApiOperation("Busca todos os clientes cadastrados")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Clientes carregados com sucesso")
+	})
 	@GetMapping
 	public Page<ClienteDTO> findAll(@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Cliente> clientes = this.clienteService.findAll(pageable);
@@ -53,6 +65,10 @@ public class ClienteController {
 		
 	}
 	
+	@ApiOperation("Busca todos os clientes cadastrados que possuem o(parte) do nome informado")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Clientes carregados com sucesso")
+	})
 	@GetMapping("/byNomeContains")
 	public Page<ClienteDTO> findByNomeLike(@RequestParam(required = true) String nome, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Cliente> clientes = this.clienteService.findByNomeContains(nome, pageable);
@@ -60,6 +76,11 @@ public class ClienteController {
 		return DTOConverter.toPage(clientes, ClienteDTO.class);
 	}
 	
+	@ApiOperation("Busca cliente pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Cliente encontrado com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe cliente com o ID informado")
+	})
 	@GetMapping("/byId")
 	public ResponseEntity<ClienteDTO> getClienteById(@RequestParam(required = true) Long id){
 		Cliente cliente = this.clienteService.encontrarClientePeloId(id);
@@ -69,6 +90,11 @@ public class ClienteController {
 		
 	}
 	
+	@ApiOperation("Busca cliente pelo CPF")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Cliente encontrado com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe cliente com o CPF informado")
+	})
 	@GetMapping("/byCpf")
 	public ResponseEntity<ClienteDTO> getClienteByCpf(@RequestParam(required = true) String cpf){
 		Cliente cliente = this.clienteService.encontrarClientePeloCpf(cpf);
@@ -78,6 +104,11 @@ public class ClienteController {
 
 	}
 	
+	@ApiOperation("Exclui cliente pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 204, message = "Cliente excluído com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe cliente com o ID informado que possa ser excluído")
+	})
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteCliente(@PathVariable Long id) {
@@ -87,6 +118,11 @@ public class ClienteController {
 	
 	}
 	
+	@ApiOperation("Atualiza cliente pelo ID")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Cliente atualizado com sucesso"),
+		@ApiResponse(code = 404, message = "Não existe cliente com o ID informado que possa ser atualizado")
+	})
 	@PutMapping("/{id}")
 	public ResponseEntity<ClienteDTO> updateCliente(@PathVariable Long id, @RequestBody @Valid ClienteDTO clienteDTO) {
 		Cliente clienteAtualizado = this.clienteService.updateCliente(id, clienteDTO.toEntity());
