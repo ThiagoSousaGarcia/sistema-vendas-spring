@@ -52,11 +52,11 @@ Facilita o uso de tecnologias de acesso a dados, bancos de dados relacionais e n
 http://localhost:8095/sistema-vendas/swagger-ui.html
 
 ### Referências
-Spring: https://spring.io/why-spring
-Spring Data: https://spring.io/projects/spring-data
-Maven: https://maven.apache.org/
-Lombok: https://projectlombok.org
-Flyway: https://flywaydb.org/documentation/
+* Spring: https://spring.io/why-spring
+* Spring Data: https://spring.io/projects/spring-data
+* Maven: https://maven.apache.org/
+* Lombok: https://projectlombok.org
+* Flyway: https://flywaydb.org/documentation/
 
 
 
