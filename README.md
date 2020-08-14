@@ -13,8 +13,6 @@ o [Spring](https://spring.io/why-spring) torna a programação em Java mais ráp
 
 A missão do [Spring Data](https://spring.io/projects/spring-data) é fornecer um modelo de programação baseado em Spring familiar e consistente para acesso a dados, enquanto ainda retém as características especiais do armazenamento de dados subjacente.
 
-Facilita o uso de tecnologias de acesso a dados, bancos de dados relacionais e não relacionais, estruturas de redução de mapa e serviços de dados baseados em nuvem. Este é um projeto abrangente que contém muitos subprojetos que são específicos para um determinado banco de dados. Os projetos são desenvolvidos trabalhando em conjunto com muitas das empresas e desenvolvedores que estão por trás dessas tecnologias interessantes.
-
 ### Maven 
 
 [Apache Maven](https://maven.apache.org/) é uma ferramenta de gerenciamento e compreensão de projetos de software. Com base no conceito de modelo de objeto de projeto (POM), o Maven pode gerenciar a construção, o relatório e a documentação de um projeto a partir de uma informação central.
