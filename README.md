@@ -55,9 +55,9 @@ http://localhost:8095/sistema-vendas/swagger-ui.html
 
 ![Class Diagram](docs/diagrama-classes.png)
 
-### Modelo ER
+### Modelo Entidade Relacional
 
-![ER Model](docs/entidade-relacional.png)
+![ER Model](docs/entidade-relacional.PNG)
 
 
 ### Referências
