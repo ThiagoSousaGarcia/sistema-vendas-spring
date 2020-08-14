@@ -51,6 +51,10 @@ Facilita o uso de tecnologias de acesso a dados, bancos de dados relacionais e n
 ### Documentação dos Endpoints
 http://localhost:8095/sistema-vendas/swagger-ui.html
 
+### Diagrama de Classes ###
+
+![Class Diagram](docs/diagrama-classes.png)
+
 ### Referências
 * Spring: https://spring.io/why-spring
 * Spring Data: https://spring.io/projects/spring-data

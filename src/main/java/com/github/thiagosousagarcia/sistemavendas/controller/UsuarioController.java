@@ -69,8 +69,9 @@ public class UsuarioController {
 			String token = jwtService.generateToken(usuario);
 			TokenDTO tokenDTO = new TokenDTO(usuario.getLogin(), token);
 			
-			return ResponseEntity.ok(tokenDTO); 
-		}catch (UsernameNotFoundException | InvalidPasswordException e) {
+			return ResponseEntity.ok(tokenDTO);
+			
+		} catch (UsernameNotFoundException | InvalidPasswordException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
 		}
 	}
