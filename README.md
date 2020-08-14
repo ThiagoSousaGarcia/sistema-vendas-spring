@@ -55,6 +55,11 @@ http://localhost:8095/sistema-vendas/swagger-ui.html
 
 ![Class Diagram](docs/diagrama-classes.png)
 
+### Modelo ER
+
+![ER Model](docs/entidade-relacional.png)
+
+
 ### Referências
 * Spring: https://spring.io/why-spring
 * Spring Data: https://spring.io/projects/spring-data
