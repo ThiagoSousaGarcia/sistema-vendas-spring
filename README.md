@@ -13,6 +13,10 @@ o [Spring](https://spring.io/why-spring) torna a programação em Java mais ráp
 
 A missão do [Spring Data](https://spring.io/projects/spring-data) é fornecer um modelo de programação baseado em Spring familiar e consistente para acesso a dados, enquanto ainda retém as características especiais do armazenamento de dados subjacente.
 
+### Spring Security
+
+[Spring Security](https://spring.io/projects/spring-security) é uma estrutura de autenticação e controle de acesso poderosa e altamente personalizável. É o padrão de fato para proteger aplicativos baseados em Spring.
+
 ### Maven 
 
 [Apache Maven](https://maven.apache.org/) é uma ferramenta de gerenciamento e compreensão de projetos de software. Com base no conceito de modelo de objeto de projeto (POM), o Maven pode gerenciar a construção, o relatório e a documentação de um projeto a partir de uma informação central.
@@ -66,6 +70,7 @@ http://localhost:8095/sistema-vendas/swagger-ui.html
 ### Referências
 * Spring: https://spring.io/why-spring
 * Spring Data: https://spring.io/projects/spring-data
+* Spring Security: https://spring.io/projects/spring-security
 * Maven: https://maven.apache.org/
 * Lombok: https://projectlombok.org
 * Flyway: https://flywaydb.org/documentation/
