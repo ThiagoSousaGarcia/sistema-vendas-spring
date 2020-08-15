@@ -59,7 +59,7 @@ http://localhost:8095/sistema-vendas/swagger-ui.html
 
 ### Modelo Entidade Relacional
 
-![ER Model](docs/entidade-relacional.PNG)
+![ER Model](docs/entidade-relacional.png)
 
 
 ### Referências
