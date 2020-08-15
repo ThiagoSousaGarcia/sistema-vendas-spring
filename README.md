@@ -27,13 +27,13 @@ A missão do [Spring Data](https://spring.io/projects/spring-data) é fornecer u
 
 ### Pré-requisitos 
 
-* Maven;
+* Maven
 
-* Java 8;
+* Java 8
 
-* Docker Engine;
+* Docker Engine
 
-* Microsoft SQL Server 17;
+* Microsoft SQL Server 17
 
 * Base de dados **sistemaVendasDB** criada.
 
