@@ -25,26 +25,27 @@ A missão do [Spring Data](https://spring.io/projects/spring-data) é fornecer u
 
 [Lombok](https://projectlombok.org) é uma biblioteca java que se conecta automaticamente ao seu editor e ferramentas de construção, aprimorando o seu java. Automatiza suas variáveis de registro e muito mais.
 
-### Pré-requisitos 
+### Pré-requisitos
+* Java 8
 
 * Maven
 
-* Java 8
-
 * Docker Engine
 
-* Microsoft SQL Server 17
-
-* Base de dados **sistemaVendasDB** criada.
-
 ### Para executar
-* Execute o Microsoft SQL Server com o seguinte comando:
+* 1º passo: Abra o terminal e execute o Microsoft SQL Server com o seguinte comando:
 
 ~~~
 docker run -d --name sqlserver2017 --restart=always -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=DaTaBaSe6-3-3#TSG" -p 1433:1433 mcr.microsoft.com/mssql/server:2017-latest
 ~~~
 
-* Execute o projeto com o seguinte comando:
+* 2º passo: Vá até um gerenciador de banco de dados (Dbeaver, por exemplo), conecte-se com os dados da instância do SQL Server recém criada e execute o seguinte script para criar a base de dados:
+
+~~~~
+create database sistemaVendasDB
+~~~~
+
+* 3º passo: Abra o terminal, vá até a pasta onde se encontra o projeto e execute-o com o seguinte comando:
 
 ~~~
 mvn package spring-boot:run
@@ -55,11 +56,11 @@ http://localhost:8095/sistema-vendas/swagger-ui.html
 
 ### Diagrama de Classes ###
 
-![Class Diagram](docs/diagrama-classes.png)
+![Diagrama de Classes](docs/diagrama-classe.png)
 
 ### Modelo Entidade Relacional
 
-![ER Model](docs/entidade-relacional.png)
+![Modelo ER](docs/modelo-er.png)
 
 
 ### Referências
