@@ -40,18 +40,22 @@ A missão do [Spring Data](https://spring.io/projects/spring-data) é fornecer u
 ### Para executar
 * Execute o Microsoft SQL Server com o seguinte comando:
 
-``` docker run -d --name sqlserver2017 --restart=always -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=DaTaBaSe6-3-3#TSG" -p 1433:1433 mcr.microsoft.com/mssql/server:2017-latest ```
+~~~
+docker run -d --name sqlserver2017 --restart=always -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=DaTaBaSe6-3-3#TSG" -p 1433:1433 mcr.microsoft.com/mssql/server:2017-latest
+~~~
 
 * Execute o projeto com o seguinte comando:
 
-``` mvn package spring-boot:run ```
+~~~
+mvn package spring-boot:run
+~~~
 
 ### Documentação dos Endpoints
 http://localhost:8095/sistema-vendas/swagger-ui.html
 
 ### Diagrama de Classes ###
 
-![Class Diagram](docs/diagrama-classes.png)
+![Class Diagram](docs/diagrama-classes.PNG)
 
 ### Modelo Entidade Relacional
 
