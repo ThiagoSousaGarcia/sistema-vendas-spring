@@ -70,7 +70,7 @@ public class ClienteController {
 		@ApiResponse(code = 200, message = "Clientes carregados com sucesso")
 	})
 	@GetMapping("/byNomeContains")
-	public Page<ClienteDTO> findByNomeLike(@RequestParam(required = true) String nome, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
+	public Page<ClienteDTO> findByNomeLike(@RequestParam String nome, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Cliente> clientes = this.clienteService.findByNomeContains(nome, pageable);
 		
 		return DTOConverter.toPage(clientes, ClienteDTO.class);
@@ -82,7 +82,7 @@ public class ClienteController {
 		@ApiResponse(code = 404, message = "Não existe cliente com o ID informado")
 	})
 	@GetMapping("/byId")
-	public ResponseEntity<ClienteDTO> getClienteById(@RequestParam(required = true) Long id){
+	public ResponseEntity<ClienteDTO> getClienteById(@RequestParam Long id){
 		Cliente cliente = this.clienteService.encontrarClientePeloId(id);
 		
 		ClienteDTO clienteDTO = cliente.toDTO();
@@ -96,7 +96,7 @@ public class ClienteController {
 		@ApiResponse(code = 404, message = "Não existe cliente com o CPF informado")
 	})
 	@GetMapping("/byCpf")
-	public ResponseEntity<ClienteDTO> getClienteByCpf(@RequestParam(required = true) String cpf){
+	public ResponseEntity<ClienteDTO> getClienteByCpf(@RequestParam String cpf){
 		Cliente cliente = this.clienteService.encontrarClientePeloCpf(cpf);
 		
 		ClienteDTO clienteDTO = cliente.toDTO();

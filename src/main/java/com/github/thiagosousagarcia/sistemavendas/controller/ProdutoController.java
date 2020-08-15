@@ -67,7 +67,7 @@ public class ProdutoController {
 		@ApiResponse(code = 404, message = "Não existe produto com o ID informado")
 	})
 	@GetMapping("byId")
-	public ResponseEntity<ProdutoDTO> findById(@RequestParam(required = true) Long id){
+	public ResponseEntity<ProdutoDTO> findById(@RequestParam Long id){
 		Produto produto = this.service.encontrarProdutoPeloID(id);
 
 		ProdutoDTO produtoDTO = produto.toDTO();
@@ -79,7 +79,7 @@ public class ProdutoController {
 		@ApiResponse(code = 200, message = "Produtos carregados com sucesso")
 	})
 	@GetMapping("byDescricaoContains")
-	public Page<ProdutoDTO> findByDescricaoContains(@RequestParam(required = true) String descricao, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
+	public Page<ProdutoDTO> findByDescricaoContains(@RequestParam String descricao, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Produto> produtos = this.service.findByDescricaoContains(descricao, pageable);
 		
 		return DTOConverter.toPage(produtos, ProdutoDTO.class);

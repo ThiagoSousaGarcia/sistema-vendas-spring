@@ -94,7 +94,7 @@ public class VendaController {
 		@ApiResponse(code = 404, message = "Não existe venda com o ID informado")
 	})
 	@GetMapping("/byId")
-	public ResponseEntity<DetalheVendaDTO> getVendaById(@RequestParam(required = true) Long id){
+	public ResponseEntity<DetalheVendaDTO> getVendaById(@RequestParam Long id){
 		Venda venda = this.vendaService.encontrarVendaPeloId(id);
 		DetalheVendaDTO dto = venda.toDetalheVendaDTO();
 		
@@ -107,7 +107,7 @@ public class VendaController {
 		@ApiResponse(code = 404, message = "Não existe venda com o ID informado que possa ser cancelada")
 	})
 	@PatchMapping("/status")
-	public ResponseEntity<String> cancelVenda(@RequestParam(required = true) Long id){
+	public ResponseEntity<String> cancelVenda(@RequestParam Long id){
 		Venda venda = this.vendaService.cancelarVenda(id);
 				
 		return ResponseEntity.ok("A venda com código " + venda.getId() + " foi cancelada com sucesso!");

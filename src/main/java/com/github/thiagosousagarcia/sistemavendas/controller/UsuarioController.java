@@ -1,13 +1,22 @@
 package com.github.thiagosousagarcia.sistemavendas.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +42,7 @@ import io.swagger.annotations.ApiResponses;
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioService service;
+	private UsuarioService usuarioService;
 	
 	@Autowired
 	private UserService userService;
@@ -47,7 +56,7 @@ public class UsuarioController {
 	})
 	@PostMapping
 	public ResponseEntity<UsuarioDTO> create (@RequestBody @Valid UsuarioDTO usuarioDTO, final UriComponentsBuilder uriBuilder){
-		Usuario novoUsuario = this.service.salvar(usuarioDTO.toEntity());
+		Usuario novoUsuario = this.usuarioService.salvar(usuarioDTO.toEntity());
 		
 		UsuarioDTO novoUsuarioDTO = novoUsuario.toDTO();
 		final Long id = novoUsuarioDTO.getId();
@@ -74,6 +83,22 @@ public class UsuarioController {
 		} catch (UsernameNotFoundException | InvalidPasswordException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
 		}
+	}
+	
+	@ApiOperation("Busca todos os usuários cadastrados")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Usuários carregados com sucesso")
+	})
+	@GetMapping
+	public Page<UsuarioDTO> findAll(@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
+		Page<Usuario> usuarios = this.usuarioService.findAll(pageable);
+		List<UsuarioDTO> usuariosDTO = new ArrayList<>();
+		
+		if(usuarios != null) {
+			usuariosDTO = usuarios.getContent().stream().map(Usuario::toDTO).collect(Collectors.toList());
+		}
+		
+		return new PageImpl<UsuarioDTO>(usuariosDTO, pageable, usuariosDTO.size());
 	}
 	
 }
