@@ -2,6 +2,7 @@ package com.github.thiagosousagarcia.sistemavendas.controller.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -60,6 +61,7 @@ public class ClienteDTO {
 	private String telefone;
 	
 	@NotBlank(message = "{email.obrigatorio}")
+	@Email(message = "{email.valido}")
 	@JsonProperty("Email")
 	private String email;
 	
