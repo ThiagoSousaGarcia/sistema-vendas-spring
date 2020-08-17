@@ -1,4 +1,4 @@
-package com.github.thiagosousagarcia.sistemavendas.validation.constraintValidator;
+package com.github.thiagosousagarcia.sistemavendas.validation.constraintvalidator;
 
 import java.util.List;
 

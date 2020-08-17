@@ -66,7 +66,8 @@ public class UsuarioController {
 	
 	@ApiOperation("Autentica um usuário")
 	@ApiResponses({
-		@ApiResponse(code = 200, message = "Usuário autenticado com sucesso")
+		@ApiResponse(code = 200, message = "Usuário autenticado com sucesso"),
+		@ApiResponse(code = 401, message = "Senha inválida")
 	})
 	@PostMapping("/auth")
 	public ResponseEntity<TokenDTO> autenticate(@RequestBody CredenciaisDTO credenciaisDTO) {

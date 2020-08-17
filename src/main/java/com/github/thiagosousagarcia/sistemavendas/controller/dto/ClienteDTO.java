@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.thiagosousagarcia.sistemavendas.model.Cliente;
@@ -26,6 +27,7 @@ public class ClienteDTO {
 	private String nome;
 	
 	@NotNull(message = "{data_nascimento.obrigatorio}")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@JsonProperty("DataNascimento")
 	private LocalDate dataNascimento;
 	

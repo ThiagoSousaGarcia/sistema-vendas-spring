@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.github.thiagosousagarcia.sistemavendas.validation.constraintValidator.NotEmptyListValidator;
+import com.github.thiagosousagarcia.sistemavendas.validation.constraintvalidator.NotEmptyListValidator;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
