@@ -7,7 +7,7 @@ Projeto de um sistemas de vendas simples com aplicação de vários conceitos do
 ## Principais tecnologias e frameworks utilizados 
 
 ### Spring Boot
-o [Spring](https://spring.io/why-spring) torna a programação em Java mais rápida, fácil e segura para todos. O foco do Spring em velocidade, simplicidade e produtividade o tornou o framework Java mais popular do mundo.
+O [Spring](https://spring.io/why-spring) torna a programação em Java mais rápida, fácil e segura para todos. O foco do Spring em velocidade, simplicidade e produtividade o tornou o framework Java mais popular do mundo.
 
 ### Spring Data 
 
