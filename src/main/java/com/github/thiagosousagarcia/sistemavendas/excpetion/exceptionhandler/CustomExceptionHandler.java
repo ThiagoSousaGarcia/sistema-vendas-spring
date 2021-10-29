@@ -32,7 +32,7 @@ public class CustomExceptionHandler {
 	}
 	
 	@ExceptionHandler(VendaNotFoundExcpetion.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorMessage handle(VendaNotFoundExcpetion ex) {
 		return new ErrorMessage(ex.getMessage());
 	}
@@ -50,7 +50,7 @@ public class CustomExceptionHandler {
 	}
 	
 	@ExceptionHandler(ClienteNotFoundExcpetion.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorMessage handle(ClienteNotFoundExcpetion ex) {
 		return new ErrorMessage(ex.getMessage());
 	}
