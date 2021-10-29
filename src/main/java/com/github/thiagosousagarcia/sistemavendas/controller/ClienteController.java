@@ -37,7 +37,7 @@ public class ClienteController {
 	@Autowired
 	ClienteService clienteService;
 	
-	@ApiOperation("Cadastra um novo cliente")
+	@ApiOperation("Método que cadastra um novo cliente")
 	@ApiResponses({
 		@ApiResponse(code = 201, message = "Cliente cadastrado com sucesso"),
 		@ApiResponse(code = 400, message = "Erro de validação")
@@ -53,10 +53,9 @@ public class ClienteController {
 
 	}
 	
-	@ApiOperation("Busca todos os clientes cadastrados")
+	@ApiOperation("Método que busca todos os clientes cadastrados")
 	@ApiResponses({
-		@ApiResponse(code = 200, message = "Clientes carregados com sucesso")
-	})
+		@ApiResponse(code = 200, message = "Clientes carregados com sucesso")})
 	@GetMapping
 	public Page<ClienteDTO> findAll(@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Cliente> clientes = this.clienteService.findAll(pageable);
@@ -65,10 +64,9 @@ public class ClienteController {
 		
 	}
 	
-	@ApiOperation("Busca todos os clientes cadastrados que possuem o(parte) do nome informado")
+	@ApiOperation("Método que busca todos os clientes cadastrados que possuem o nome (ou parte do nome) informado")
 	@ApiResponses({
-		@ApiResponse(code = 200, message = "Clientes carregados com sucesso")
-	})
+		@ApiResponse(code = 200, message = "Clientes carregados com sucesso")})
 	@GetMapping("/byNomeContains")
 	public Page<ClienteDTO> findByNomeLike(@RequestParam String nome, @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable){
 		Page<Cliente> clientes = this.clienteService.findByNomeContains(nome, pageable);
