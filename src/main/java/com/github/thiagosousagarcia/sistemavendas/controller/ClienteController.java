@@ -74,11 +74,10 @@ public class ClienteController {
 		return DTOConverter.toPage(clientes, ClienteDTO.class);
 	}
 	
-	@ApiOperation("Busca cliente pelo ID")
+	@ApiOperation("Método que busca cliente pelo ID")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "Cliente encontrado com sucesso"),
-		@ApiResponse(code = 404, message = "Não existe cliente com o ID informado")
-	})
+		@ApiResponse(code = 404, message = "Não existe cliente com o ID informado")})
 	@GetMapping("/byId")
 	public ResponseEntity<ClienteDTO> getClienteById(@RequestParam Long id){
 		Cliente cliente = this.clienteService.encontrarClientePeloId(id);
@@ -88,11 +87,10 @@ public class ClienteController {
 		
 	}
 	
-	@ApiOperation("Busca cliente pelo CPF")
+	@ApiOperation("Método que busca cliente pelo CPF")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "Cliente encontrado com sucesso"),
-		@ApiResponse(code = 404, message = "Não existe cliente com o CPF informado")
-	})
+		@ApiResponse(code = 404, message = "Não existe cliente com o CPF informado")})
 	@GetMapping("/byCpf")
 	public ResponseEntity<ClienteDTO> getClienteByCpf(@RequestParam String cpf){
 		Cliente cliente = this.clienteService.encontrarClientePeloCpf(cpf);
