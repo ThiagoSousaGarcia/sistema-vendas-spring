@@ -20,11 +20,11 @@ public class ProdutoDTO {
 	private Long id;
 	
 	@NotBlank(message = "{descricao.obrigatorio}")
-	@JsonProperty("Descricao")
+	@JsonProperty("descrição")
 	private String descricao;
 	
 	@NotNull(message = "{preco.obrigatorio}")
-	@JsonProperty("Preco")
+	@JsonProperty("preço")
 	private BigDecimal preco;
 	
 	public Produto toEntity() {
