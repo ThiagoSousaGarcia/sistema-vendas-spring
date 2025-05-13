@@ -1,130 +1,81 @@
-# 🏗️ Modernização do Fluxo de Efetivação de Contratação
-### Projeto de transformação do processo de contratação no CG Investimentos
+# 🔄 Modernização do Fluxo de Contratação e Manutenção – CG Investimentos
 
 ---
 
-## ✅ Motivação e contexto da mudança
+## 1. 🎯 Motivação da Mudança
 
-O processo anterior de efetivação de contratação de produtos no CG Investimentos estava baseado em uma estrutura centralizada, composta por duas aplicações Java:
+O processo antigo utilizava duas aplicações Java: uma chamada **Orquestrador**, que executava uma máquina de estados, e outra chamada **ACL Integrações**, responsável pelas chamadas externas.
 
-- **Orquestrador**: responsável por coordenar o fluxo completo, como uma máquina de estados.
-- **ACL Integrações**: encarregado de executar as chamadas externas ou internas correspondentes a cada etapa do processo.
+Apesar de funcional, essa arquitetura apresentava limitações claras:
 
-Essa arquitetura foi eficiente durante um período, mas com o aumento da complexidade dos produtos e das integrações, surgiram diversos **desafios recorrentes**:
+- Rastreabilidade baixa (logs difíceis de entender e dispersos).
+- Alto acoplamento entre orquestração e execução.
+- Dificuldade de manutenção e evolução do fluxo.
+- Gestão manual de erros e ausência de notificações automáticas.
+- Baixa visibilidade para os times de produto e suporte.
 
-### 🔴 Problemas identificados:
-
-- **Baixa rastreabilidade**: era difícil identificar em tempo real qual o estado da contratação e em que etapa ela estava.
-- **Manutenção complexa**: alterações em uma etapa exigiam mudanças em vários pontos do código, muitas vezes exigindo testes regressivos complexos.
-- **Acoplamento excessivo**: as responsabilidades estavam entrelaçadas entre orquestração e execução, dificultando a modularidade e reuso.
-- **Logs dispersos e difíceis de interpretar**: para entender uma falha, era necessário reunir logs de múltiplas fontes.
-- **Resiliência limitada**: em caso de erro, o rollback nem sempre era claro ou facilmente executável.
-- **Escalabilidade manual**: a arquitetura não se beneficiava de mecanismos nativos de escalabilidade ou paralelismo.
+Esses problemas afetavam não apenas o **fluxo de efetivação**, mas também o de **manutenção dos contratos** (como alterações e cancelamentos).
 
 ---
 
-## 🧠 Solução adotada: AWS Step Functions + AWS Lambda
+## 2. 🧠 Solução Adotada
 
-Para resolver esses pontos e modernizar o fluxo de contratação, migramos o processo para uma **arquitetura serverless**, utilizando os serviços **AWS Step Functions** e **AWS Lambda**, com apoio de **SNS** para notificações e incidentes automatizados.
+Para tornar o processo mais moderno, escalável e observável, migramos para uma arquitetura **serverless** usando:
 
----
+- **AWS Step Functions**: orquestração visual e auditável do fluxo.
+- **AWS Lambda**: funções desacopladas, cada uma responsável por uma etapa.
+- **SNS (Simple Notification Service)**: envio automático de alertas e incidentes.
+- **Rollback automático**: etapas de desfazimento em caso de falhas.
 
-### 🔄 Como funciona o novo fluxo
-
-- Cada etapa da contratação foi transformada em uma **função Lambda desacoplada** com responsabilidade única.
-- A **orquestração do fluxo** é feita por um **Step Function**, que executa os passos sequencial ou paralelamente, conforme definido.
-- Em caso de sucesso, o processo avança naturalmente.  
-- Em caso de falha, o Step Function aciona automaticamente a **etapa de compensação (rollback)** correspondente e envia uma **notificação via SNS**.
-- O SNS dispara alertas e também pode abrir **incidentes automatizados** em sistemas de monitoração como CloudWatch, Datadog, PagerDuty, etc.
+Essa abordagem foi aplicada tanto na **efetivação** quanto na **manutenção dos contratos**, permitindo controle total de ponta a ponta.
 
 ---
 
-## 🎯 Benefícios detalhados da nova abordagem
+## 3. 🚀 Benefícios da Nova Arquitetura
 
-### 📍 1. Rastreabilidade em tempo real
+### ✅ Rastreabilidade e Visibilidade
+- Visualização em tempo real do fluxo via Step Functions.
+- Fácil identificação do ponto de falha e tempo gasto por etapa.
 
-- Através da interface gráfica do AWS Step Functions, é possível acompanhar em tempo real cada etapa da contratação.
-- Visualização clara do fluxo, com status de **sucesso, erro ou rollback**, permitindo ações rápidas pelo time de produto ou suporte.
+### ✅ Separação de Responsabilidades
+- Cada função é independente e com responsabilidade única.
+- Permite testes e mudanças sem impactar o fluxo completo.
 
-### 🔗 2. Separação clara de responsabilidades
+### ✅ Resiliência e Escalabilidade
+- Falhas disparam notificações automáticas e realizam rollback.
+- Execução paralela e escalável conforme a demanda.
 
-- Cada função Lambda tem um propósito específico, como "Validar Dados", "Criar Conta", "Registrar Contrato", etc.
-- Isso facilita **testes unitários**, **auditoria** e **alterações pontuais** sem afetar o fluxo inteiro.
-
-### 🧩 3. Arquitetura desacoplada e escalável
-
-- As Lambdas podem ser desenvolvidas, atualizadas ou substituídas **independentemente**.
-- Escalabilidade automática: a AWS escala cada função sob demanda, sem necessidade de infraestrutura dedicada.
-
-### 🧯 4. Gestão proativa de erros e incidentes
-
-- Falhas geram eventos automaticamente:
-  - **Rollback** automático da contratação parcial.
-  - **Notificações automáticas** via SNS.
-  - **Criação de incidentes** para o time responsável.
-- A resolução se torna **mais rápida** e com **menos dependência da área técnica** para identificar o problema.
-
-### 🔁 5. Reaproveitamento e padronização
-
-- As Lambdas podem ser reutilizadas em outros fluxos de negócio (ex: cancelamento, renovação, etc.).
-- Padronização das chamadas externas (ex: chamadas a APIs de terceiros) e tratamento de falhas.
-
-### 🛠️ 6. Agilidade para evolução do produto
-
-- Novas etapas no processo podem ser adicionadas ao Step Function com **impacto mínimo** nas funções existentes.
-- Facilita a **experiência de experimentação e testes A/B**, sem refatorações complexas.
+### ✅ Agilidade de Evolução
+- Adição ou alteração de etapas de forma rápida e segura.
+- Redução do tempo de desenvolvimento e validação.
 
 ---
 
-## 🧱 Comparativo antes e depois
+## 4. 🛠️ Alterações Realizadas + Visão do Fluxo
 
-| Aspecto                     | Arquitetura Antiga (Java)             | Arquitetura Nova (Step Functions + Lambda) |
-|----------------------------|----------------------------------------|--------------------------------------------|
-| Orquestração               | Centralizada na aplicação Orquestrador| Distribuída via Step Function              |
-| Execução das etapas        | ACL Integrações (Java)                | Lambdas independentes                      |
-| Rastreabilidade            | Logs manuais e complexos              | Visível graficamente e em tempo real       |
-| Tratamento de falhas       | Parcial, com rollback manual          | Rollback automático + notificações SNS     |
-| Notificações e alertas     | Manual ou inexistente                 | Automáticas e com incidentes integrados    |
-| Escalabilidade             | Limitada                              | Automática, nativa da AWS                  |
-| Tempo de manutenção        | Alto (rebuild e deploy completo)      | Baixo (alterações isoladas por função)     |
-| Testes                     | Difíceis e integrados                 | Unitários por função                       |
-| Tempo de resolução de erro | Elevado                               | Reduzido com rastreabilidade nativa        |
+> *(Espaço para incluir detalhes técnicos e prints)*
 
----
+- Definição do fluxo completo em AWS Step Functions.
+- Criação das funções Lambda por etapa (efetivação e manutenção).
+- Integração com SNS para alertas automáticos.
+- Configuração de rollback por erro.
+- Inserção de logs estruturados e dashboards de monitoração.
 
-## 📁 Alterações realizadas no projeto
-
-> *(Liste aqui todas as alterações realizadas. Por exemplo:)*
-
-- Criação de Step Function com definição de estados.
-- Desenvolvimento de funções Lambda individuais para cada etapa.
-- Integração com SNS para envio de falhas e alertas.
-- Refatoração do código Java legado para adaptação.
-- Criação de políticas IAM e logs estruturados.
-- Configuração de mecanismos de rollback por falha.
-- Criação de dashboards e monitoração.
+> **Exemplos a incluir:**
+> - print-step-function-fluxo.png  
+> - print-erro-sns.png  
+> - print-rollback.png
 
 ---
 
-## 📊 Visão do novo fluxo
+### ✅ Conclusão
 
-> *(Inserir aqui os prints do Step Function com execução normal, falha, e notificação do SNS. Pode usar imagens como:)*
+Com a nova arquitetura, os fluxos de **efetivação e manutenção** passaram a ser:
 
-- `print-fluxo-completo.png`
-- `print-erro-e-rollback.png`
-- `print-alerta-sns.png`
+- Mais confiáveis
+- Mais fáceis de monitorar
+- Mais simples de evoluir
 
----
-
-## 📎 Conclusão
-
-A migração do fluxo de efetivação para a arquitetura baseada em **AWS Step Functions e Lambdas** representa um avanço significativo na **modernização, rastreabilidade, confiabilidade e capacidade de evolução** do CG Investimentos.
-
-Essa mudança traz não apenas benefícios técnicos, mas também **impactos positivos diretos para o time de produto**:
-
-- Redução do tempo para identificar e resolver erros.
-- Maior visibilidade sobre o que está acontecendo nas contratações.
-- Mais agilidade para evoluir o processo conforme mudanças de negócio.
+Essa mudança reduz drasticamente o esforço para resolver problemas, aumenta a transparência para os times de produto e suporte, e prepara o CG Investimentos para uma jornada de inovação mais ágil e segura.
 
 ---
-
